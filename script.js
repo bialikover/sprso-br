@@ -1,5 +1,5 @@
 let childs = document.getElementById("slots").innerHTML;
-var lever = document.getElementById('lever');
+let lever = document.getElementById('lever');
 lever.addEventListener('click', pullReel);
 
 let options = {
@@ -38,9 +38,9 @@ function renderLuck(luck){
 }
 
 function randomize() {
-  let idx1 = Math.floor(Math.random() * (2));
-  let idx2 = Math.floor(Math.random() * (2));
-  let idx3 = Math.floor(Math.random() * (2));
+  let idx1 = Math.floor(Math.random() * (3 - 1 + 1) + 1) - 1;
+  let idx2 = Math.floor(Math.random() * (3 - 1 + 1) + 1) - 1;
+  let idx3 = Math.floor(Math.random() * (3 - 1 + 1) + 1) - 1;
   console.log(options.reel1[idx1], options.reel2[idx2], options.reel3[idx3]);
   return {
     reel1: { display: options.reel1[idx1], index: idx1 },
