@@ -181,15 +181,18 @@
 
 body {
   background: #2e9dcc;
-}
-h1{
   font-family: 'Shadows Into Light Two', cursive;
   color: #fff;
+}
+h1{
   margin: 0 auto;
-     text-align: center;
-    text-decoration: underline;
-    line-height: 12rem;
-    font-size: 4rem;
+  text-align: center;
+  text-decoration: underline;
+  line-height: 7rem;
+  font-size: 4rem;
+}
+p{
+  text-align: center;
 }
 .machine {
   width: 300px;
@@ -322,6 +325,38 @@ h1{
   width: 340px;
   background: #383636;
   margin: 0 auto;
+}
+
+.win{
+  background: rgba(100, 183, 119, 0.95);
+}
+.lose{
+  background: rgba(234, 72, 72, 0.95);
+}
+
+.modal{
+    display:none;
+    width: 50%;
+    height: 30%;
+    z-index: 4;
+    position: absolute;
+    top: 30%;
+    border-radius: 10px;
+    left: 25%;
+    color: #fff;
+    text-align: center;
+    cursor: pointer;
+}
+
+.modal .message{
+    margin: 4%;
+    font-size: 2.3rem; 
+    color: #fff;
+    text-align: center;
+}
+.modal .message small{
+    font-size: 1.2rem;
+    display: block;
 }
 @keyframes shuffle {
   0% {

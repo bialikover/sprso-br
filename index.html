@@ -3,28 +3,32 @@
 
 <head>
   <link href="https://fonts.googleapis.com/css?family=Shadows+Into+Light+Two" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
+<div id="modal" class="modal animated">
+  <p id="message" class="message"></p>
+  <small>press to continue...</small>
+</div>
 <h1>Espresso bar slot machine</h1>
-
 <div class="machine">
   <input id="lever" type="checkbox" class="checkbox"/>
   <div id="slots" class="slots">
     <div class="board item1">
+      <div class="reel"><span class="thmbtck-cbespresso-machine"></span></div>
       <div class="reel"><span class="thmbtck-cbcoffee-machine"></span></div>
       <div class="reel"><span class="thmbtck-cbteapot"></span></div>
-      <div class="reel"><span class="thmbtck-cbespresso-machine"></span></div>
     </div>
     <div class="board item2">
-       <div class="reel"><span class="thmbtck-cbcoffee-filter"></span></div>
-       <div class="reel"><span class="thmbtck-cbtea-strainer"></span></div>
+      <div class="reel"><span class="thmbtck-cbcoffee-filter"></span></div>
+      <div class="reel"><span class="thmbtck-cbtea-strainer"></span></div>
        <div class="reel"><span class="thmbtck-cbespresso-tamper"></span></div>
     </div>
     <div class="board item3">
+      <div class="reel"><span class="thmbtck-cbtea-bag"></span></div>
        <div class="reel"><span class="thmbtck-cbcoffee-grounds"></span></div>
-       <div class="reel"><span class="thmbtck-cbtea-bag"></span></div>
        <div class="reel"><span class="thmbtck-cbespresso-beans"></span></div>
     </div>
   </div>
@@ -37,7 +41,8 @@
   <div class="cup"></div>
 </div>
 <div class="machine-foot"></div>
-
+<p> Hint: you can use "L" button to pull the lever...</p>
+<p> Hint: You can use "esc" button to dismiss modal and stop...</p>
   <script src="script.js"></script>
 </body>
 
