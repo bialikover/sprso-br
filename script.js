@@ -1,104 +1,99 @@
-let childs = document.getElementById("slots").innerHTML;
+// Variables:
+let childs = document.getElementById('slots').innerHTML;
 let lever = document.getElementById('lever');
-lever.addEventListener('click', pullReel);
-document.body.addEventListener('keydown', checkKey);
-
 let modal = document.getElementById('modal');
-modal.addEventListener('click', dismiss);
-
+let keys = { ESC: 27, L: 76 };
 let options = {
-  reel1:['coffee-machine', 'teapot', 'espresso-machine'],
-  reel2:['coffee-filter', 'tea-strainer', 'espresso-tamper'],
-  reel3:['coffee-grounds', 'tea-bag', 'espresso-beans'],
+  reel1: ['coffee-machine', 'teapot', 'espresso-machine'],
+  reel2: ['coffee-filter', 'tea-strainer', 'espresso-tamper'],
+  reel3: ['coffee-grounds', 'tea-bag', 'espresso-beans'],
   prize: [{
     name: 'cup of coffee',
     icon: '<span class="thmbtck-cbcoffee-cup"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span><span class="path7"></span></span>'
   }, {
-    name: 'cup of tea',
-    icon: '<span class="thmbtck-cbtea-cup"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span><span class="path7"></span><span class="path8"></span><span class="path9"></span></span>'
-  }, {
-    name: 'cup of espresso',
-    icon: '<span class="thmbtck-cbespresso-cup"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span><span class="path7"></span><span class="path8"></span></span>'
-  }]
+      name: 'cup of tea',
+      icon: '<span class="thmbtck-cbtea-cup"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span><span class="path7"></span><span class="path8"></span><span class="path9"></span></span>'
+    }, {
+      name: 'cup of espresso',
+      icon: '<span class="thmbtck-cbespresso-cup"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span><span class="path7"></span><span class="path8"></span></span>'
+    }]
 };
 
-function checkKey(e){
-    if(e.which === 76){
-      console.log("triggered L key");
-      lever.checked = !lever.checked;
-      pullReel();
-    }
-    if(e.which == 27){
-      dismiss();
-    }
+//Event Listeners
+document.body.addEventListener('keydown', keyNav);
+lever.addEventListener('click', pullReel);
+modal.addEventListener('click', dismiss);
+
+// Key Board Navigation
+function keyNav(e) {
+  if (e.which === keys.L) {
+    lever.checked = !lever.checked;
+    pullReel();
+  }
+  if (e.which === keys.ESC) {
+    dismiss();
+  }
 }
 
+// Logic
 function pullReel() {
-    if(!lever.checked ){
-      let luck = randomize();
-      renderLuck(luck);
-      var winner = isWinner(luck);
-      var message = '<small>'+luck.reel1.display+', '+luck.reel2.display+' and ' +luck.reel3.display+'... </small>';
-      if (winner) {
-          message += buildPrize(options.prize[luck.reel1.index]);
-      } else {
-          message += buildLose();
-      }
-      document.getElementById('message').innerHTML = message;
-      display(winner);
-    }else{
-      reset();
-      dismiss();
-    }
-}
-
-function display(win){
-  modal.classList.remove('win');
-  modal.classList.remove('lose');
-  win ? modal.classList.add('win'): modal.classList.add('lose');
-  modal.style.display = 'block';
-  modal.classList.remove('bounceOut');
-  modal.classList.add('bounceIn');
-}
-
-function dismiss(e){
-  modal.classList.remove('bounceIn');
-  modal.classList.add('bounceOut');
-}
-
-function reset(){
-  document.getElementById("slots").innerHTML = childs;
-}
-
-function buildPrize(prize){
-  return  'Awesome! you win a '+'<b>'+ prize.name + '</b> '+prize.icon + ' mmm... Enjoy!!!';
-}
-
-function buildLose(){
-  return 'Nothing now, but try agin'; 
-  
-}
-
-function renderLuck(luck){
-  let html = '';
-  html+='<div class="board item'+ luck.reel1.index +'"><div class="reel"><span class="thmbtck-cb'+luck.reel1.display+'"></span></div></div>';
-  html+='<div class="board item'+ luck.reel2.index +'"><div class="reel"><span class="thmbtck-cb'+luck.reel2.display+'"></span></div></div>';
-  html+='<div class="board item'+ luck.reel3.index +'"><div class="reel"><span class="thmbtck-cb'+luck.reel3.display+'"></span></div></div>';
-  document.getElementById("slots").innerHTML = html;
+  if (!lever.checked) {
+    let luck = randomize();
+    display(luck);
+  } else {
+    reset();
+  }
 }
 
 function randomize() {
   let idx1 = Math.floor(Math.random() * (3 - 1 + 1) + 1) - 1;
   let idx2 = Math.floor(Math.random() * (3 - 1 + 1) + 1) - 1;
   let idx3 = Math.floor(Math.random() * (3 - 1 + 1) + 1) - 1;
-  console.log(options.reel1[idx1], options.reel2[idx2], options.reel3[idx3]);
-  return {
-    reel1: { display: options.reel1[idx1], index: idx1 },
-    reel2: { display: options.reel2[idx2], index: idx2 },
-    reel3: { display: options.reel3[idx3], index: idx3 }
-  };
+  return [{ display: options.reel1[idx1], index: idx1 }, { display: options.reel2[idx2], index: idx2 }, { display: options.reel3[idx3], index: idx3 }];
 }
 
-function isWinner(luck){  
- return (luck.reel1.index === luck.reel2.index && luck.reel1.index === luck.reel3.index);
+function isWinner(luck) {
+  return luck[0].index === luck[1].index && luck[1].index === luck[2].index;
+}
+
+// DOM Manipulation
+function dismiss(e) {
+  modal.classList.remove('bounceIn');
+  modal.classList.add('bounceOut');
+}
+
+function display(luck) {
+  modal.classList.remove('win');
+  modal.classList.remove('lose');
+  let luckElements = getLuckElements(luck);
+  let modalMessage = '<small>You have... ' + luck[0].display + ', ' + luck[1].display + ' and ' + luck[2].display + '... </small>';
+  if (isWinner(luck)) {
+    modalMessage += 'Awesome! you win a ' + '<b>' + options.prize[luck[0].index].name + '</b> ' + options.prize[luck[0].index].icon + ' mmm... Enjoy!!!';
+    modal.classList.add('win')
+  } else {
+    modalMessage += 'Nothing now, but try agin';
+    modal.classList.add('lose')
+  }
+  paint(modalMessage, luckElements);
+  modal.style.display = 'block';
+  modal.classList.remove('bounceOut');
+  modal.classList.add('bounceIn');
+}
+
+function getLuckElements(luck) {
+  let html = '';
+  luck.forEach(function (item) {
+    html += '<div class="board item' + item.index + '"><div class="reel"><span class="thmbtck-cb' + item.display + '"></span></div></div>';
+  });
+  return html;
+}
+
+function paint(modalMessage, luckElements) {
+  document.getElementById('message').innerHTML = modalMessage;
+  document.getElementById('slots').innerHTML = luckElements;
+}
+
+function reset() {
+  document.getElementById('slots').innerHTML = childs;
+  dismiss();
 }
