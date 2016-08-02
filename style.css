@@ -319,6 +319,7 @@ p{
     background: #98755a;
     margin-top: 0;
     position: relative;
+    background-image: linear-gradient(to left, rgba(0,0,0,0.1) 20%, rgba(0,0,0,0.05) 25%, rgba(0,0,0,0.05) 50%, rgba(0,0,0,0) 50%);
 }
 .machine-foot {
   height: 20px;
